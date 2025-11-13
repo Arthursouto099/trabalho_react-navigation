@@ -1,27 +1,21 @@
-import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import TabsNavigator from './navigators/BottonTabNavigator';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemaProvider } from './providers/ThemeProvider';
-
-const RootStack = createNativeStackNavigator()
+import useThemeContext from './hooks/useThemeContext';
+import { commonStyles } from './styles/commonStyles';
+import Router from './router';
+import { UserLoggedProvider } from './providers/UserContextProvider';
 
 export default function App() {
+
+
   return (
-    <SafeAreaProvider>
-    <NavigationContainer>
-      <ThemaProvider>
-      <SafeAreaView style={{flex: 1}}>
-      <RootStack.Navigator initialRouteName='tabs' screenOptions={
-        {headerShown: false}
-      } >
-          <RootStack.Screen name='tabs' component={TabsNavigator}/>
-      </RootStack.Navigator>
-      </SafeAreaView>
-      </ThemaProvider>
-    </NavigationContainer>
-    </SafeAreaProvider>
+    <ThemaProvider>
+      <UserLoggedProvider>
+      <SafeAreaProvider>
+          <Router/>
+      </SafeAreaProvider>
+      </UserLoggedProvider>
+    </ThemaProvider>
   );
 }
-
-
